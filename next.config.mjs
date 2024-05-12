@@ -10,13 +10,15 @@ const nextConfig = {
     ]
   },
   async rewrites() {
-    console.log(process.env.NEXT_PUBLIC_API_URL)
-    return [
-      {
-        source: '/api',
-        destination: process.env.NEXT_PUBLIC_API_URL + '/api',
-      },
-    ]
+    if (process.env.NODE_ENV !== 'production') {
+      return [
+        {
+          source: '/api/:path*',
+          destination: 'http://localhost:8080/api/:path*',
+        },
+      ]
+    }
+    return []
   },
 }
 

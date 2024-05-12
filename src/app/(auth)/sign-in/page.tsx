@@ -16,8 +16,8 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
-import fetch from '@/lib/fetch'
 import { useRouter } from 'next/navigation'
+import { API } from '@/lib/api'
 
 const formSchema = z.object({
   username,
@@ -34,10 +34,14 @@ export default function SignIn() {
   })
 
   const onSubmit = async (form: z.infer<typeof formSchema>) => {
-    console.log(form)
-    fetch('/v1/auth/login', { method: 'POST', body: JSON.stringify(form) }).then(() => {
-      router.push('/')
+    const res = await fetch(API.auth.login, {
+      method: 'POST',
+      body: JSON.stringify(form),
+      credentials: 'same-origin',
     })
+    if (res.status === 200) {
+      router.push('/')
+    }
   }
 
   return (
@@ -78,7 +82,7 @@ export default function SignIn() {
               )}
             />
             <div className="flex justify-between">
-              <Link href="/sign-in">Not registered yet?</Link>
+              <Link href="/sign-up">Not registered yet?</Link>
               <Button type="submit">Login</Button>
             </div>
           </form>

@@ -2,17 +2,15 @@ export default function _fetch<T = unknown>(
   url: string,
   options?: RequestInit,
 ): Promise<IResponse<T>> {
-  console.log('url', '/api' + url, options)
-  return fetch('/api' + url, {
+  return fetch(process.env.NEXT_PUBLIC_API_URL + '/api' + url, {
     ...options,
     credentials: 'same-origin',
   })
-    .then(res => {
-      console.log('res', res)
+    .then(async res => {
       return res.json()
     })
     .catch(e => {
-      console.log(e)
+      console.log('err', e)
     })
 }
 

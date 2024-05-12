@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { username, displayName, password, inviteCode } from '@/lib/validators'
+import { username, displayedName, password, inviteCode } from '@/lib/validators'
 import {
   Form,
   FormControl,
@@ -16,14 +16,13 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import Link from 'next/link'
-import { register } from './actions/register'
-import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { API } from '@/lib/api'
 
 const formSchema = z
   .object({
     username,
-    displayName,
+    displayedName,
     password,
     repeatPassword: password,
     invite: inviteCode,
@@ -38,7 +37,7 @@ export default function SignUp() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: '',
-      displayName: '',
+      displayedName: '',
       password: '',
       repeatPassword: '',
       invite: '',
@@ -46,12 +45,14 @@ export default function SignUp() {
   })
 
   const onSubmit = async (form: z.infer<typeof formSchema>) => {
-    console.log(form)
-    const { err } = await register(form)
-    console.log(err)
-    if (!err) {
-      toast('Successfully registered')
-      router.push('/sign-in')
+    const { repeatPassword, ...payload } = form
+    const res = await fetch(API.auth.register, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      credentials: 'same-origin',
+    })
+    if (res.status === 200) {
+      router.push('/')
     }
   }
 
@@ -81,7 +82,7 @@ export default function SignUp() {
             />
             <FormField
               control={form.control}
-              name="displayName"
+              name="displayedName"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Display name</FormLabel>

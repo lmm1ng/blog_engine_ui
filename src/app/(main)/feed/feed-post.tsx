@@ -2,16 +2,14 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { IPost } from '@/models/post'
-import MarkdownIt from 'markdown-it'
-import 'react-markdown-editor-lite/lib/index.css'
-import '@/app/editor-overwrites.css'
+import MDView from '@/components/md-view'
+import { Separator } from '@/components/ui/separator'
+import Link from 'next/link'
 
-const parser = new MarkdownIt()
-
-export default function FeedPost({ post }: { post: IPost }) {
+export default async function FeedPost({ post }: { post: IPost }) {
   return (
     <Card className="text-ellipsis break-words">
-      <CardHeader>
+      <CardHeader className="p-4">
         <CardTitle className="flex flex-col gap-3">
           <div className="flex justify-between">
             <div className="flex items-center space-x-2">
@@ -20,19 +18,20 @@ export default function FeedPost({ post }: { post: IPost }) {
               </Avatar>
               <span className="text-sm">{post.user.displayedName}</span>
             </div>
-            <span className="text-xs">{new Date(post.createdAt).toLocaleString()}</span>
+            <span className="text-xs font-normal">{new Date(post.createdAt).toLocaleString()}</span>
           </div>
           <div>{post.title}</div>
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <span
-          className="custom-html-style"
-          dangerouslySetInnerHTML={{ __html: parser.render(post.short) }}
-        />
+      <Separator />
+      <CardContent className="p-4">
+        <MDView content={post.short} />
       </CardContent>
-      <CardFooter>
-        <Button>Reed more...</Button>
+      <Separator />
+      <CardFooter className="p-4">
+        <Button asChild>
+          <Link href={`/posts/${post.id}`}>Read more...</Link>
+        </Button>
       </CardFooter>
     </Card>
   )

@@ -8,5 +8,6 @@ export const API = {
   posts: {
     create: process.env.NEXT_PUBLIC_API_URL + '/api/v1/posts',
     feed: process.env.NEXT_PUBLIC_API_URL + '/api/v1/posts/feed',
+    get: process.env.NEXT_PUBLIC_API_URL + '/api/v1/posts',
   },
 }

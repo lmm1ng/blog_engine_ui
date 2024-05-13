@@ -1,38 +1,25 @@
-'use client'
-
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { API } from '@/lib/api'
 import { IPrivateUser } from '@/models/user'
+import { useTheme } from 'next-themes'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 
-export default function HeaderProfile() {
-  const [user, setUser] = useState<IPrivateUser | null>(null)
+interface IHeaderDropdownProps {
+  user: IPrivateUser | null
+  onLogout: () => void
+}
 
-  useEffect(() => {
-    fetch(API.auth.user, { credentials: 'same-origin' }).then(async res => {
-      if (res.status === 200) {
-        const data = await res.json()
-        setUser(data.data)
-      }
-    })
-  }, [])
-
-  const logout = () => {
-    fetch(API.auth.logout, { credentials: 'same-origin', method: 'POST' }).then(async res => {
-      if (res.status === 200) {
-        setUser(null)
-      }
-    })
-  }
+export default function HeaderDropdown({ user, onLogout }: IHeaderDropdownProps) {
+  const { setTheme } = useTheme()
   return (
     <>
       {user ? (
@@ -44,7 +31,13 @@ export default function HeaderProfile() {
             <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
+            <DropdownMenuSeparator />
+
+            <DropdownMenuLabel>Theme</DropdownMenuLabel>
+            <DropdownMenuItem onClick={() => setTheme('light')}>Light</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme('dark')}>Dark</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme('system')}>System</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (

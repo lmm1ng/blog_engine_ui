@@ -1,0 +1,65 @@
+.sec-md,
+.sec-html {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+.sec-md {
+  border-right-width: 1px !important;
+  border-right-color: hsl(var(--border)) !important;
+}
+
+.sec-html {
+  border: none !important;
+}
+
+.rc-md-navigation .button-wrap .button {
+  color: hsl(var(--foreground)) !important;
+}
+
+.rc-md-editor,
+.editor-container,
+.rc-md-navigation {
+  border: none !important;
+}
+
+.rc-md-navigation {
+  background-color: hsl(var(--background)) !important;
+}
+
+.drop-wrap {
+  background-color: hsl(var(--background)) !important;
+}
+
+.header-list .list-item {
+  background-color: hsl(var(--background)) !important;
+}
+
+.header-list .list-item:hover {
+  background-color: hsl(var(--secondary)) !important;
+}
+
+.custom-html-style {
+  color: hsl(var(--foreground)) !important;
+
+  th {
+    background-color: hsl(var(--secondary)) !important;
+  }
+
+  pre {
+    background-color: hsl(var(--secondary)) !important;
+  }
+
+  code {
+    background-color: hsl(var(--secondary)) !important;
+  }
+
+  p {
+    color: hsl(var(--foreground)) !important;
+  }
+}
+
+.section-container {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+}

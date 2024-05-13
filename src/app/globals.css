@@ -6,8 +6,6 @@
   :root {
     --background: 0 0% 100%;
 
-    --md-editor-background-color: 0 0% 100% !important;
-
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -41,8 +39,6 @@
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-
-    --md-editor-background-color: 222.2 84% 4.9% !important;
 
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;

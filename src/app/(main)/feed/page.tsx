@@ -1,18 +1,19 @@
-import { PostCard } from '@/components/post-card'
 import { API } from '@/lib/api'
 import { IResponse } from '@/lib/fetch'
 import { IPost } from '@/models/post'
+import FeedPost from './feed-post'
+import styles from './styles.module.scss'
+import { cn } from '@/lib/utils'
 
 export default async function Feed() {
-  const posts: IResponse<IPost[]> = await fetch(API.posts.feed, {
-    next: { revalidate: 200 },
-  }).then(async res => res.json())
+  const posts: IResponse<IPost[]> = await fetch(API.posts.feed, { cache: 'no-cache' }).then(
+    async res => res.json(),
+  )
 
-  console.log(posts)
   return (
-    <div className="feed">
+    <div className={cn(styles.container, 'flex flex-col w-full space-y-10')}>
       {(posts.data || []).map(post => (
-        <PostCard
+        <FeedPost
           key={post.id}
           post={post}
         />

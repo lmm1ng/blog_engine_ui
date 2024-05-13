@@ -10,12 +10,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { API } from '@/lib/api'
-import { IUser } from '@/models/user'
+import { IPrivateUser } from '@/models/user'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 export default function HeaderProfile() {
-  const [user, setUser] = useState<IUser | null>(null)
+  const [user, setUser] = useState<IPrivateUser | null>(null)
 
   useEffect(() => {
     fetch(API.auth.user, { credentials: 'same-origin' }).then(async res => {

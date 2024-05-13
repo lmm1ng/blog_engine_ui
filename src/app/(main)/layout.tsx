@@ -1,5 +1,4 @@
 // import type { Metadata } from "next";
-
 import { Separator } from '@/components/ui/separator'
 import Header from './header'
 
@@ -12,7 +11,7 @@ export default function DefaultLayout({
     <div className="h-full flex flex-col">
       <Header />
       <Separator className="mb-3" />
-      <main className="container flex-1">{children}</main>
+      <main className="h-full container">{children}</main>
     </div>
   )
 }

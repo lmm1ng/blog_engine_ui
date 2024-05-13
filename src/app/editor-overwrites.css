@@ -42,6 +42,20 @@
 .custom-html-style {
   color: hsl(var(--foreground)) !important;
 
+  ol,
+  ul,
+  menu {
+    padding-left: 1rem;
+  }
+
+  ol {
+    list-style: decimal !important;
+  }
+
+  ul {
+    list-style: initial !important;
+  }
+
   th {
     background-color: hsl(var(--secondary)) !important;
   }

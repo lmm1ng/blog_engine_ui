@@ -1,25 +1,32 @@
+'use client'
+
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { API } from '@/lib/api'
 import { IPrivateUser } from '@/models/user'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
-interface IHeaderDropdownProps {
-  user: IPrivateUser | null
-  onLogout: () => void
-}
-
-export default function HeaderDropdown({ user, onLogout }: IHeaderDropdownProps) {
+export default function HeaderDropdown({ user }: { user: IPrivateUser | null }) {
+  const router = useRouter()
   const { setTheme } = useTheme()
+
+  const onLogout = () => {
+    fetch(API.auth.logout, { credentials: 'same-origin', method: 'POST' }).then(res => {
+      if (res.ok) {
+        router.push('/')
+        router.refresh()
+      }
+    })
+  }
   return (
     <>
       {user ? (
@@ -31,7 +38,7 @@ export default function HeaderDropdown({ user, onLogout }: IHeaderDropdownProps)
             <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem onClick={onLogout}>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onLogout()}>Logout</DropdownMenuItem>
             <DropdownMenuSeparator />
 
             <DropdownMenuLabel>Theme</DropdownMenuLabel>

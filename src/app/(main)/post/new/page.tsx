@@ -31,10 +31,11 @@ const formSchema = z.object({
   tags: z.array(z.string()),
 })
 
-const mdParser = new MarkdownIt(/* Markdown-it options */)
+const mdParser = new MarkdownIt()
 
 export default function NewPost() {
   const router = useRouter()
+
   const [step, setStep] = useState(1)
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,7 +56,7 @@ export default function NewPost() {
       credentials: 'same-origin',
     })
 
-    if (res.status === 201) {
+    if (res.ok) {
       router.push('/')
     }
   }
@@ -130,10 +131,6 @@ export default function NewPost() {
                     <FormLabel>Short</FormLabel>
                     <FormControl>
                       <MdEditor
-                        //     value={field.value}
-                        // onChange={({text}) => field.onChange(text)}
-                        //     className="h-full my-2"
-                        //  renderHTML={text => mdParser.render(text)}
                         renderHTML={text => mdParser.render(text)}
                         onChange={({ text }) => field.onChange(text)}
                       />

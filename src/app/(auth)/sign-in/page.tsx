@@ -25,6 +25,7 @@ const formSchema = z.object({
 })
 export default function SignIn() {
   const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,12 +36,14 @@ export default function SignIn() {
 
   const onSubmit = async (form: z.infer<typeof formSchema>) => {
     const res = await fetch(API.auth.login, {
-      method: 'POST',
       body: JSON.stringify(form),
+      method: 'POST',
       credentials: 'same-origin',
     })
-    if (res.status === 200) {
+
+    if (res.ok) {
       router.push('/')
+      router.refresh()
     }
   }
 
@@ -75,7 +78,10 @@ export default function SignIn() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field}></Input>
+                    <Input
+                      type="password"
+                      {...field}
+                    ></Input>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

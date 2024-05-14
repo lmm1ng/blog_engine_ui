@@ -33,6 +33,7 @@ const formSchema = z
   })
 export default function SignUp() {
   const router = useRouter()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -47,12 +48,14 @@ export default function SignUp() {
   const onSubmit = async (form: z.infer<typeof formSchema>) => {
     const { repeatPassword, ...payload } = form
     const res = await fetch(API.auth.register, {
-      method: 'POST',
       body: JSON.stringify(payload),
+      method: 'POST',
       credentials: 'same-origin',
     })
-    if (res.status === 200) {
+
+    if (res.ok) {
       router.push('/')
+      router.refresh()
     }
   }
 
@@ -100,7 +103,10 @@ export default function SignUp() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field}></Input>
+                    <Input
+                      type="password"
+                      {...field}
+                    ></Input>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -113,7 +119,10 @@ export default function SignUp() {
                 <FormItem>
                   <FormLabel>Repeat password</FormLabel>
                   <FormControl>
-                    <Input {...field}></Input>
+                    <Input
+                      type="password"
+                      {...field}
+                    ></Input>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

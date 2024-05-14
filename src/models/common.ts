@@ -6,3 +6,8 @@ export interface IResponse<T> {
     page?: number
   }
 }
+
+export interface IActionResponse<T> {
+  err: unknown
+  data: T
+}

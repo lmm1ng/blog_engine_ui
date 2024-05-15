@@ -9,6 +9,20 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Mindposter',
+  applicationName: 'Mindposter',
+  description: 'Open platform for your articles',
+  openGraph: {
+    type: 'website',
+    url: process.env['NEXT_PUBLIC_API_URL'],
+    title: 'Mindposter',
+    description: 'Open platform for your articles',
+    siteName: 'Mindposter',
+    images: [
+      {
+        url: process.env['NEXT_PUBLIC_API_URL'] + '/pencil.svg',
+      },
+    ],
+  },
 }
 
 export default function RootLayout({

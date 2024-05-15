@@ -7,7 +7,28 @@ import { IPost } from '@/models/post'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default async function Post({ params }: { params: { postId: string } }) {
+interface IPostParams {
+  params: { postId: string }
+}
+
+// keywords meta
+
+export async function generateMetadata({ params }: IPostParams) {
+  const post: IResponse<IPost> = await fetch(API.posts.post + `/${params.postId}`, {
+    cache: 'no-cache',
+  }).then(res => res.json())
+
+  return {
+    title: `Mindposter | ${post.data.title}`,
+    description: post.data.short,
+    openGraph: {
+      url: process.env['NEXT_PUBLIC_API_URL'] + '/posts/' + post.data.id,
+      title: post.data.title,
+    },
+  }
+}
+
+export default async function Post({ params }: IPostParams) {
   const user = await getUser()
 
   const post: IResponse<IPost> = await fetch(API.posts.post + `/${params.postId}`, {

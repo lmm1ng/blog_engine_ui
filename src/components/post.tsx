@@ -2,7 +2,6 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { IPost } from '@/models/post'
-import MDView from '@/components/md-view'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -32,7 +31,7 @@ export default function Post({ post, editable }: { post: IPost; editable?: boole
       </CardHeader>
       <Separator />
       <CardContent className="p-4">
-        <MDView content={post.short} />
+        <p>{post.short}</p>
       </CardContent>
       <Separator />
       <CardFooter className="p-4">

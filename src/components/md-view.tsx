@@ -9,7 +9,7 @@ const parser = new MarkdownIt()
 export default async function MDView({ content }: { content: string }) {
   return (
     <span
-      className="custom-html-style"
+      className="custom-html-style break-words"
       dangerouslySetInnerHTML={{ __html: parser.render(content) }}
     />
   )

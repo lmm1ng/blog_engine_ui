@@ -23,6 +23,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { API } from '@/lib/api'
 import { IPost } from '@/models/post'
+import { Textarea } from '@/components/ui/textarea'
 
 const formSchema = z.object({
   body: post,
@@ -103,7 +104,7 @@ export default function PostEditor({
 
       <Form {...form}>
         <form
-          className="h-full"
+          className="flex-1 flex flex-col space-y-4"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           {step === 1 && (
@@ -131,7 +132,7 @@ export default function PostEditor({
                 control={form.control}
                 name="title"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="flex flex-col">
                     <FormLabel>Title</FormLabel>
                     <FormControl>
                       <Input {...field} />
@@ -144,20 +145,20 @@ export default function PostEditor({
                 control={form.control}
                 name="short"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="flex-1 flex flex-col">
                     <FormLabel>Short</FormLabel>
                     <FormControl>
-                      <MdEditor
-                        defaultValue={form.getValues('short')}
-                        renderHTML={text => mdParser.render(text)}
-                        onChange={({ text }) => field.onChange(text)}
+                      <Textarea
+                        className="flex-1"
+                        {...field}
+                        style={{ resize: 'none' }}
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <div className="flex justify-end mt-4">
+              <div className="flex justify-end ">
                 <Button type="submit">{editId === null ? 'Create' : 'Edit'}</Button>
               </div>
             </>

@@ -8,14 +8,14 @@ export default function Logo() {
   const router = useRouter()
   return (
     <span
-      className="text-2xl cursor-pointer flex space-x-1 items-center"
+      className="cursor-pointer flex space-x-1 items-center"
       onClick={() => router.push('/')}
     >
       <motion.div
         initial="default"
         whileHover="hover"
         whileTap="hover"
-        className="flex space-x-2"
+        className="flex space-x-2 text-2xl"
       >
         <motion.div
           variants={{ default: { rotate: 0, scale: 1 }, hover: { rotate: 360, scale: 1.2 } }}
@@ -27,7 +27,7 @@ export default function Logo() {
             alt="pencil"
           />
         </motion.div>
-        <span>Blog</span>
+        <span className="text-xl">Mindposter</span>
       </motion.div>
     </span>
   )

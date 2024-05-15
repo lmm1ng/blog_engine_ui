@@ -68,8 +68,6 @@ export default function PostEditor({
       credentials: 'same-origin',
     })
 
-    console.log('editId', editId)
-
     if (res.ok) {
       if (editId === null) {
         router.push('/feed')

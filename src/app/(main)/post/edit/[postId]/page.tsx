@@ -6,6 +6,9 @@ import { IPost } from '@/models/post'
 import { redirect } from 'next/navigation'
 
 export default async function EditPost({ params }: { params: { postId: string } }) {
+  if (!params.postId) {
+    redirect('/')
+  }
   const post: IResponse<IPost> = await fetch(API.posts.post + `/${params.postId}`, {
     cache: 'no-cache',
   }).then(async res => res.json())

@@ -1,4 +1,4 @@
-import getUser from '@/lib/getUser'
+import getUser from '@/lib/user'
 import { redirect } from 'next/navigation'
 
 export default async function PostLayout({

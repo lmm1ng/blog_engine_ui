@@ -1,4 +1,4 @@
-import getUser from '@/lib/getUser'
+import getUser from '@/lib/user'
 import Header from './header'
 import { API } from '@/lib/api'
 import { cookies } from 'next/headers'

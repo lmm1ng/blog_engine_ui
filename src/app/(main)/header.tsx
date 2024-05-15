@@ -2,7 +2,7 @@ import { ThemeSelect } from '@/components/theme-select'
 import HeaderDropdown from './header-dropdown'
 import Logo from '@/components/logo'
 import CreateBulb from '@/components/create-bulb'
-import getUser from '@/lib/getUser'
+import getUser from '@/lib/user'
 
 export default async function Header() {
   const user = await getUser()

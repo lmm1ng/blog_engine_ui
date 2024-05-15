@@ -37,7 +37,8 @@ export default function HeaderDropdown({ user }: { user: IPrivateUser | null }) 
           <DropdownMenuContent>
             <DropdownMenuLabel>{user.username}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push('/profile')}>Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push('/posts/my')}>My posts</DropdownMenuItem>
             <DropdownMenuItem onClick={() => onLogout()}>Logout</DropdownMenuItem>
             <DropdownMenuSeparator />
 

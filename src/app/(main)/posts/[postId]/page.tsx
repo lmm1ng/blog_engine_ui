@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: IPostParams) {
     title: `Mindposter | ${post.data.title}`,
     description: post.data.short,
     openGraph: {
-      url: process.env['NEXT_PUBLIC_API_URL'] + '/posts/' + post.data.id,
+      url: process.env.NEXT_PUBLIC_API_URL + '/posts/' + post.data.id,
       title: post.data.title,
     },
   }

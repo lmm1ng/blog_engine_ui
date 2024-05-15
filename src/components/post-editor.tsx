@@ -158,8 +158,13 @@ export default function PostEditor({
                   </FormItem>
                 )}
               />
-              <div className="flex justify-end ">
-                <Button type="submit">{editId === null ? 'Create' : 'Edit'}</Button>
+              <div className="flex justify-end">
+                <Button
+                  className="w-full sm:w-auto"
+                  type="submit"
+                >
+                  {editId === null ? 'Create' : 'Edit'}
+                </Button>
               </div>
             </>
           )}

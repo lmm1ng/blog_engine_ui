@@ -13,13 +13,13 @@ export const metadata: Metadata = {
   description: 'Open platform for your articles',
   openGraph: {
     type: 'website',
-    url: process.env['NEXT_PUBLIC_API_URL'],
+    url: process.env.NEXT_PUBLIC_API_URL,
     title: 'Mindposter',
     description: 'Open platform for your articles',
     siteName: 'Mindposter',
     images: [
       {
-        url: process.env['NEXT_PUBLIC_API_URL'] + '/pencil.svg',
+        url: process.env.NEXT_PUBLIC_API_URL + '/pencil.svg',
       },
     ],
   },

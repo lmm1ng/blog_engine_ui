@@ -35,14 +35,16 @@ export default async function PostList({
           />
         ))}
       </div>
-      <footer>
-        <PostsPagination
-          type={type}
-          page={page}
-          limit={limit}
-          total={total}
-        />
-      </footer>
+      {Boolean(total) && (
+        <footer>
+          <PostsPagination
+            type={type}
+            page={page}
+            limit={limit}
+            total={total}
+          />
+        </footer>
+      )}
     </div>
   )
 }

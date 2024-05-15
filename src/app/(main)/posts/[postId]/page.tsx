@@ -57,8 +57,8 @@ export default async function Post({ params }: IPostParams) {
           )}
         </div>
       </header>
-      <span className="font-bold text-2xl">{post.data.title}</span>
-      <main>
+      <span className="font-bold text-2xl break-words">{post.data.title}</span>
+      <main className="mt-5">
         <MDView content={post.data.body} />
       </main>
     </article>

@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
+import './editor-overwrites.css'
 import { ThemeProvider } from '@/providers/theme'
 import { Toaster } from '@/components/ui/toaster'
 import { cn } from '@/lib/utils'

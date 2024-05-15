@@ -4,7 +4,6 @@ import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css'
-import '@/app/editor-overwrites.css'
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'

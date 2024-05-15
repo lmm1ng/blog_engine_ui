@@ -77,3 +77,11 @@
   background-color: hsl(var(--background)) !important;
   color: hsl(var(--foreground)) !important;
 }
+
+.bulb-image--off {
+  filter: invert(0);
+}
+
+.dark .bulb-image--off {
+  filter: invert(100);
+}

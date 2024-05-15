@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
+import { useTheme } from 'next-themes'
 
 enum BULB_STATE {
   ON = '/bulb-on.svg',
@@ -10,6 +11,7 @@ enum BULB_STATE {
 }
 
 export default function CreateBulb() {
+  const { theme } = useTheme()
   const [image, setImage] = useState(BULB_STATE.OFF)
 
   const onOver = () => {
@@ -34,6 +36,7 @@ export default function CreateBulb() {
     >
       <Link href={'/post/new'}>
         <Image
+          className={`bulb-image--${image === BULB_STATE.OFF ? 'off' : 'on'}`}
           src={image}
           width="32"
           height="32"

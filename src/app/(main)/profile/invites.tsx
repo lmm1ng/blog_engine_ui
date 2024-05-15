@@ -36,7 +36,7 @@ export default function Invites() {
             onClick={onInviteClick}
             className="w-full sm:w-auto bg-gray-100 p-4 rounded-sm text-center cursor-pointer"
           >
-            <code>{invite}</code>
+            <code style={{ color: 'hsl(222.2 84% 4.9%)' }}>{invite}</code>
           </div>
         )}
       </div>

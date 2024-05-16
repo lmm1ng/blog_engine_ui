@@ -3,15 +3,13 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
-import { useTheme } from 'next-themes'
 
 enum BULB_STATE {
   ON = '/bulb-on.svg',
   OFF = '/bulb-off.svg',
 }
 
-export default function CreateBulb() {
-  const { theme } = useTheme()
+export default function CreateBulb({ isAuth }: { isAuth: boolean }) {
   const [image, setImage] = useState(BULB_STATE.OFF)
 
   const onOver = () => {
@@ -34,7 +32,7 @@ export default function CreateBulb() {
       onMouseOver={onOver}
       onMouseOut={onOut}
     >
-      <Link href={'/post/new'}>
+      <Link href={isAuth ? '/post/new' : '/sign-in'}>
         <Image
           className={`bulb-image--${image === BULB_STATE.OFF ? 'off' : 'on'}`}
           src={image}

@@ -4,7 +4,7 @@ import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { short, title, post } from '@/lib/validators'
@@ -60,6 +60,25 @@ export default function PostEditor({
     },
   })
 
+  useEffect(() => {
+    if (editId !== null) {
+      return
+    }
+
+    const storage = localStorage.getItem('draftForm')
+
+    const jsonDraft: InferForm = storage ? JSON.parse(storage) : { title: '', short: '', body: '' }
+
+    form.setValue('title', jsonDraft.title)
+    form.setValue('short', jsonDraft.short)
+    form.setValue('body', jsonDraft.body)
+  }, [editId, form])
+
+  useEffect(() => {
+    const sub = form.watch(val => localStorage.setItem('draftForm', JSON.stringify(val)))
+    return () => sub.unsubscribe()
+  }, [form])
+
   const onSubmit = async (form: InferForm) => {
     const res = await fetch(API.posts.post + (editId !== null ? `/${editId}` : ''), {
       method: editId === null ? 'POST' : 'PUT',
@@ -107,25 +126,6 @@ export default function PostEditor({
           onSubmit={form.handleSubmit(onSubmit)}
         >
           {step === 1 && (
-            <FormField
-              control={form.control}
-              name="body"
-              render={({ field }) => (
-                <FormItem className="h-full flex flex-col">
-                  <FormLabel>Post body</FormLabel>
-                  <FormControl className="flex-1">
-                    <MdEditor
-                      defaultValue={form.getValues('body')}
-                      renderHTML={text => mdParser.render(text)}
-                      onChange={({ text }) => field.onChange(text)}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
-          {step === 2 && (
             <>
               <FormField
                 control={form.control}
@@ -151,6 +151,29 @@ export default function PostEditor({
                         className="flex-1"
                         {...field}
                         style={{ resize: 'none' }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </>
+          )}
+          {step === 2 && (
+            <>
+              <FormField
+                control={form.control}
+                name="body"
+                render={({ field }) => (
+                  <FormItem className="h-full flex flex-col">
+                    <FormLabel>Post body</FormLabel>
+                    <FormControl className="flex-1">
+                      <MdEditor
+                        defaultValue={form.getValues('body')}
+                        renderHTML={text => {
+                          field.onChange(text)
+                          return mdParser.render(text)
+                        }}
                       />
                     </FormControl>
                     <FormMessage />

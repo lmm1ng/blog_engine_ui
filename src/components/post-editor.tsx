@@ -11,18 +11,12 @@ import { short, title, post } from '@/lib/validators'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { useRouter } from 'next/navigation'
 import { API } from '@/lib/api'
 import { IPost } from '@/models/post'
 import { Textarea } from '@/components/ui/textarea'
+import { cn } from '@/lib/utils'
 
 const formSchema = z.object({
   body: post,
@@ -66,12 +60,11 @@ export default function PostEditor({
     }
 
     const storage = localStorage.getItem('draftForm')
+    const jsonDraft: InferForm = storage ? JSON.parse(storage) : form.formState.defaultValues
 
-    const jsonDraft: InferForm = storage ? JSON.parse(storage) : { title: '', short: '', body: '' }
-
-    form.setValue('title', jsonDraft.title)
-    form.setValue('short', jsonDraft.short)
-    form.setValue('body', jsonDraft.body)
+    Object.entries(jsonDraft).forEach(([key, value]) => {
+      form.setValue(key as keyof InferForm, value)
+    })
   }, [editId, form])
 
   useEffect(() => {
@@ -98,24 +91,32 @@ export default function PostEditor({
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex justify-between items-center mb-3">
-        <span className="text-lg font-bold">Step {step}</span>
-        <div className="flex space-x-2">
-          {step !== 1 && (
+      <div className="flex flex-col sm:flex-row justify-between mb-3 gap-2">
+        <span className="text-md text-gray-400">
+          {step === 1 && 'Your idea article title'}
+          {step === 2 && 'Share your thoughts using Markdown language'}
+          {step === 3 && 'Extract a teaser of your post to display as a preview of your post'}
+        </span>
+        <div className="flex gap-2 [&>*]:basis-[50%]">
+          {step !== 1 ? (
             <Button
               variant="secondary"
               onClick={() => setStep(step - 1)}
             >
               Prev
             </Button>
+          ) : (
+            <div className="sm:hidden" />
           )}
-          {step !== 2 && (
+          {step !== 3 ? (
             <Button
               variant="secondary"
               onClick={() => setStep(step + 1)}
             >
               Next
             </Button>
+          ) : (
+            <div className="sm:hidden" />
           )}
         </div>
       </div>
@@ -126,13 +127,12 @@ export default function PostEditor({
           onSubmit={form.handleSubmit(onSubmit)}
         >
           {step === 1 && (
-            <>
+            <div className="h-full w-full  flex items-center justify-center">
               <FormField
                 control={form.control}
                 name="title"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    <FormLabel>Title</FormLabel>
+                  <FormItem className="w-full sm:w-[50%]">
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -140,24 +140,7 @@ export default function PostEditor({
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="short"
-                render={({ field }) => (
-                  <FormItem className="flex-1 flex flex-col">
-                    <FormLabel>Short</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        className="flex-1"
-                        {...field}
-                        style={{ resize: 'none' }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </>
+            </div>
           )}
           {step === 2 && (
             <>
@@ -166,7 +149,6 @@ export default function PostEditor({
                 name="body"
                 render={({ field }) => (
                   <FormItem className="h-full flex flex-col">
-                    <FormLabel>Post body</FormLabel>
                     <FormControl className="flex-1">
                       <MdEditor
                         defaultValue={form.getValues('body')}
@@ -180,12 +162,32 @@ export default function PostEditor({
                   </FormItem>
                 )}
               />
+            </>
+          )}
+          {step === 3 && (
+            <>
+              <FormField
+                control={form.control}
+                name="short"
+                render={({ field }) => (
+                  <FormItem className="flex-1 flex flex-col">
+                    <FormControl>
+                      <Textarea
+                        className="flex-1"
+                        {...field}
+                        style={{ resize: 'none' }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <div className="flex justify-end">
                 <Button
                   className="w-full sm:w-auto"
                   type="submit"
                 >
-                  {editId === null ? 'Create' : 'Edit'}
+                  {editId === null ? 'Post' : 'Save'}
                 </Button>
               </div>
             </>

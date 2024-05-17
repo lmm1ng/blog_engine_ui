@@ -62,6 +62,7 @@
 
   pre {
     background-color: hsl(var(--secondary)) !important;
+    margin: 8px 0;
   }
 
   code {
@@ -70,6 +71,19 @@
 
   p {
     color: hsl(var(--foreground)) !important;
+  }
+
+  img {
+    margin: 8px 0;
+  }
+
+  table {
+    margin: 8px 0;
+  }
+
+  ol,
+  ul {
+    margin: 8px 0;
   }
 }
 

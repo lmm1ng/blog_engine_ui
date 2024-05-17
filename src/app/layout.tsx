@@ -4,9 +4,16 @@ import './editor-overwrites.css'
 import { ThemeProvider } from '@/providers/theme'
 import { Toaster } from '@/components/ui/toaster'
 import { cn } from '@/lib/utils'
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 
 const inter = Inter({ subsets: ['latin'] })
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
 
 export const metadata: Metadata = {
   title: 'Mindposter',
